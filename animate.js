@@ -10,33 +10,35 @@ var ctx=c.getContext("2d");//obj info
 var stop=document.getElementById("stop");
 var animate=document.getElementById("animate");
 
-var radius=1;
 
-var reqID;
+var radius=1;//startsat one and increments
+
+var reqID;//request ID useful for stopping
 var growth=true;//state variable
-var color=0
+var color=0//C0l0r3$
 
 
 var changeState=function(radius){
-  if(radius>=300){
+  if(radius>=300){//at tangent to the square it starts shrinking
     console.log("changing it to false");
     growth=false;
   }
+  //when it reaches 1 radius it grows again
   else if(radius<=1){
-
     growth=true;
   }
 }
 
-//this draws the circle with an outline of black and a fill color of cyan
+
 var circle= function(){
+  //draws a circle
   ctx.fillStyle="hsl(" + color++ + ",100%,80.5%)";
   ctx.beginPath();
-  ctx.clearRect(0,0,600,600);
+  ctx.clearRect(0,0,600,600);//removes the trail (even though the trail pattern looked cool :( )
   ctx.arc(300,300,radius,0,2*Math.PI);//subtracting to center the mouse click
   ctx.fill();
   ctx.stroke();
-  changeState(radius);
+  changeState(radius);//checks the radius
   if(growth){
     radius+=1;
     console.log("increasing: "+ radius);
@@ -45,18 +47,14 @@ var circle= function(){
     radius-=1;
     console.log("decreasing: "+radius);
   }
-  reqID=window.requestAnimationFrame(circle);
+  reqID=window.requestAnimationFrame(circle);//update request ID
 
   console.log("reqID==: "+ reqID);
 }
 
-var clearCanvas= function(){
-  ctx.clearRect(0,0,600,600)
-}
 
 var stopAnimation=function(){
-  window.cancelAnimationFrame(reqID);
+  window.cancelAnimationFrame(reqID);//stops it
 }
 animate.addEventListener("click",circle);
 stop.addEventListener("click",stopAnimation);
-clearCanvas();
