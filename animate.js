@@ -17,10 +17,6 @@ var reqID;//request ID useful for stopping
 var growth=true;//state variable
 var color=0//C0l0r3$
 
-//for the dvd part:
-var dvd=new Image();
-
-
 var changeState=function(radius){
   if(radius>=300){//at tangent to the square it starts shrinking
     console.log("changing it to false");
@@ -35,6 +31,7 @@ var changeState=function(radius){
 
 var circle= function(){
   //draws a circle
+  window.cancelAnimationFrame(reqID);
   ctx.fillStyle="hsl(" + color++ + ",100%,80.5%)";
   ctx.beginPath();
   ctx.clearRect(0,0,600,600);//removes the trail (even though the trail pattern looked cool :( )
@@ -55,6 +52,10 @@ var circle= function(){
   console.log("reqID==: "+ reqID);
 }
 
+
+//for the dvd part:
+
+//===========================+++DVD
 var animateDVD = function() {
   //declares the variables
   var radius = 40;
@@ -64,12 +65,19 @@ var animateDVD = function() {
   var dy = Math.floor(Math.random() * 3) + 1;
   //uses the variables declared above to draw
   var drawDVD = function() {
+    window.cancelAnimationFrame(reqID);
     ctx.fillStyle="hsl(" + color++ + ",100%,50%)";
+    ctx.clearRect(0,0,600,600);//removes the trail (even though the trail pattern looked cool :( )
+    var dvd=new Image(100,100);
+    dvd.src="dvd.png";
+    ctx.drawImage(dvd,x,y);
+    /*
     ctx.beginPath();
     ctx.clearRect(0, 0, c.width, c.height);
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke();
+    */
     reqID = window.requestAnimationFrame(drawDVD);
 
     x += dx;
